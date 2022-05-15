@@ -1,0 +1,53 @@
+
+$prefix: "st";
+
+// Colours
+$primary: #FF2B7C;
+$primary-accent: #692E7C;
+
+$text-color: #FFFFFF;
+
+$grey: #344856;
+$grey-light: #50697A;
+
+$bg: #1A2E38;
+$bg-accent: #2C4756;
+$bg-accent-dark: #142833;
+
+// Text
+$font-default: "Montserrat", sans-serif;
+$font-display: "Trade Winds", cursive;
+
+$font-xl: 30px;
+$font-lg: 24px;
+$font-md: 20px;
+$font-sm: 16px;
+$font-xs: 12px;
+
+// Layout
+$gap: 20px;
+
+$global-border-radius: 10px;
+
+$alignments-h:
+	(space-between, space-between),
+	(space-around, space-around),
+	(flex-start, flex-start),
+	(flex-end, end),
+	(center, center),
+	(stretch, stretch);
+
+$alignments-v:
+	(space-between, space-between),
+	(space-around, space-around),
+	(flex-start, flex-start),
+	(flex-end, end),
+	(center, center),
+	(stretch, stretch);
+
+$mq-breakpoints: (
+	xs: 360px,
+	sm: 760px,
+	md: 1200px,
+	lg: 1500px,
+);

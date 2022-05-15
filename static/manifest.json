@@ -1,0 +1,17 @@
+{
+  "short_name": "The Hunt",
+  "name": "The Hunt",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#1A2E38",
+  "display": "fullscreen",
+  "scope": "/",
+  "orientation": "portrait",
+  "theme_color": "#FF2B7C"
+}
