@@ -1,15 +1,13 @@
 <template>
 	<div class="banner">
-		<h1 class="banner__title">
-			The Hunt
-		</h1>
+		<h1 class="banner__title">The Hunt</h1>
 		<GlobalProgressBar />
 	</div>
 </template>
 <script>
 export default {
 	name: "GlobalBanner"
-}
+};
 </script>
 <style lang="scss">
 .banner {
@@ -17,7 +15,7 @@ export default {
 		position: relative;
 		color: $primary;
 		font-family: $font-display;
-		letter-spacing: .2rem;
+		letter-spacing: 0.2rem;
 		font-size: $font-xl;
 		text-align: center;
 		margin: math.div($gap, 2) 0 0;

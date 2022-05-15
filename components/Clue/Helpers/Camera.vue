@@ -1,8 +1,8 @@
 <template>
 	<div class="camera">
-		<qrcode-reader @decode="onDecode($event)" :track="false">
+		<QrcodeReader :track="false" @decode="onDecode($event)">
 			<div class="flash" :class="{ flashed: hasScanned }"></div>
-		</qrcode-reader>
+		</QrcodeReader>
 	</div>
 </template>
 <script>
@@ -10,21 +10,18 @@ import { QrcodeReader } from "vue-qrcode-reader";
 
 export default {
 	name: "ClueCamera",
+	components: {
+		QrcodeReader
+	},
 	data: () => ({
 		hasScanned: false
 	}),
-	components: {
-		'qrcode-reader': QrcodeReader
-	},
-	props: {
-		data: {}
-	},
 	methods: {
 		onDecode(e) {
-			if(e && e.length) {
+			if (e && e.length) {
 				this.hasScanned = true;
 				navigator.vibrate([100]);
-				this.$emit('on-decode', e);
+				this.$emit("on-decode", e);
 			}
 		}
 	}
@@ -36,7 +33,7 @@ export default {
 		opacity: 1;
 	}
 	50% {
-		opacity: .2;
+		opacity: 0.2;
 	}
 	100% {
 		opacity: 0;
@@ -56,11 +53,11 @@ export default {
 
 		width: 100%;
 		height: 100%;
-		background-color: fade-out(white, .2);
+		background-color: fade-out(white, 0.2);
 		opacity: 0;
 
 		&.flashed {
-			animation: flash .5s 1 ease-out;
+			animation: flash 0.5s 1 ease-out;
 		}
 	}
 }

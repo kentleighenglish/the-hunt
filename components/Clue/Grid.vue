@@ -1,13 +1,19 @@
 <template>
 	<div class="clueGrid">
-		<div v-for="stage in stages" class="clueGrid__stage">
+		<div v-for="(stage, index) in stages" :key="index" class="clueGrid__stage">
 			<h2>Stage {{ stage.stage }}</h2>
 			<div class="clueGrid__stageClues">
-				<a v-for="c in stage.clues" class="clueGrid__item" :class="{ disabled: !c.clue.unlocked, active: c.clue.current }" @click="onClueClick(c.clue)">
+				<a
+					v-for="c in stage.clues"
+					:key="c._id"
+					class="clueGrid__item"
+					:class="{ disabled: !c.clue.unlocked, active: c.clue.current }"
+					@click="onClueClick(c.clue)"
+				>
 					<span class="clueGrid__itemIcon">
-						<icon>{{ c.clue.unlocked ? 'lock_open': 'lock' }}</icon>
+						<icon>{{ c.clue.unlocked ? "lock_open" : "lock" }}</icon>
 					</span>
-					<span>{{ c.clue.unlocked ? c.number : '?' }}</span>
+					<span>{{ c.clue.unlocked ? c.number : "?" }}</span>
 				</a>
 			</div>
 			<hr />
@@ -23,29 +29,28 @@ export default {
 		...mapState({
 			stages({ clues: { clues } }) {
 				return clues.reduce((acc, clue, index) => {
-						const stageIndex = clue.stage - 1;
+					const stageIndex = clue.stage - 1;
 
-						acc[stageIndex] = {
-							stage: clue.stage,
-							clues: [
-								...(acc[stageIndex].clues || []),
-								{
-									clue,
-									number: index + 1
-								}
-							]
-						}
+					acc[stageIndex] = {
+						stage: clue.stage,
+						clues: [
+							...(acc[stageIndex].clues || []),
+							{
+								clue,
+								number: index + 1
+							}
+						]
+					};
 
-						return acc;
-					}, []
-				);
+					return acc;
+				}, []);
 			}
 		})
 	},
 	methods: {
 		onClueClick(clue) {
-			if(clue.unlocked) {
-				this.$emit('grid-click', clue._id);
+			if (clue.unlocked) {
+				this.$emit("grid-click", clue._id);
 			}
 		}
 	}

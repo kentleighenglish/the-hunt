@@ -5,6 +5,7 @@
 </template>
 <script>
 export default {
+	name: "CommonLoader",
 	props: {
 		loading: {
 			type: Boolean,

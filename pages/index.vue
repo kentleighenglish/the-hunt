@@ -7,7 +7,7 @@
 		/>
 		<CommonLoader v-if="loading && !error" />
 		<div v-if="!loading && error && mode === 'error'">
-			<p class="error">{{error}}</p>
+			<p class="error">{{ error }}</p>
 		</div>
 	</div>
 </template>
@@ -29,5 +29,5 @@ export default {
 			}
 		})
 	}
-}
+};
 </script>

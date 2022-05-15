@@ -1,63 +1,78 @@
 <template>
 	<div class="nav">
 		<div class="nav__buttons">
-			<a class="nav__button" @click="prev()" :class="{ disabled: prevDisabled }">
+			<a
+				class="nav__button"
+				:class="{ disabled: prevDisabled }"
+				@click="prev()"
+			>
 				<CommonIcon>chevron_left</CommonIcon>
 			</a>
-			<a class="nav__button" @click="next()" :class="{ disabled: nextDisabled }">
+			<a
+				class="nav__button"
+				:class="{ disabled: nextDisabled }"
+				@click="next()"
+			>
 				<CommonIcon>chevron_right</CommonIcon>
 			</a>
 		</div>
-		<a class="nav__button" @click="setMode('view')" :class="{ active: data.mode === 'view', disabled: !data.currentClueId }">
+		<a
+			class="nav__button"
+			:class="{ active: data.mode === 'view', disabled: !data.currentClueId }"
+			@click="setMode('view')"
+		>
 			<CommonIcon>search</CommonIcon>
 		</a>
-		<a class="nav__button" @click="setMode('camera')" :class="{ active: data.mode === 'camera' }">
+		<a
+			class="nav__button"
+			:class="{ active: data.mode === 'camera' }"
+			@click="setMode('camera')"
+		>
 			<CommonIcon>photo_camera</CommonIcon>
 		</a>
-		<a class="nav__button" @click="setMode('grid')" :class="{ active: data.mode === 'grid' }">
+		<a
+			class="nav__button"
+			:class="{ active: data.mode === 'grid' }"
+			@click="setMode('grid')"
+		>
 			<CommonIcon>apps</CommonIcon>
 		</a>
 	</div>
 </template>
 <script>
+import { mapState } from "vuex";
+
 export default {
 	name: "GlobalNav",
-	props: {
-		data: {
-			type: Object,
-			default: () => ({})
-		}
-	},
-	methods: {
-		next() {
-			if (!this.nextDisabled) {
-				this.data.mode = 'view';
-				this.$emit('nav-click', this.data.currentClueIndex+1)
-			}
-		},
-		prev() {
-			if (!this.prevDisabled) {
-				this.data.mode = 'view';
-				this.$emit('nav-click', this.data.currentClueIndex-1)
-			}
-		},
-		setMode(mode) {
-			if(mode !== 'view' || (this.data.currentClueId)) {
-				this.data.mode = mode;
-			}
-		}
-	},
 	computed: {
+		...mapState({
+			clues({ clues: { loading, clues = [] } }) {
+				return clues;
+			},
+			currentClue({ clues: { currentClue } }) {
+				return currentClue;
+			},
+			prevClue({ clues: { currentClue, clues } }) {
+				const currentIndex = clues.findIndex(
+					(clue) => currentClue._id === clue._id
+				);
+
+				return clues[currentIndex - 1] || null;
+			},
+			nextClue({ clues: { currentClue, clues } }) {
+				const currentIndex = clues.findIndex(
+					(clue) => currentClue._id === clue._id
+				);
+
+				return clues[currentIndex + 1] || null;
+			},
+			mode({ clues: { mode } }) {
+				return mode;
+			}
+		}),
 		prevDisabled() {
-			if (!this.data.loading &&
-				this.data.clues &&
-				this.data.clues.length
-			) {
-				if(
-					this.data.currentClueIndex !== null &&
-					this.data.currentClueIndex !== 0 &&
-					(this.data.clues[this.data.currentClueIndex-1] && !!this.data.clues[this.data.currentClueIndex-1].unlocked)
-				) {
+			if (!this.loading && this.clues && this.clues.length) {
+				if (this.prevClue && this.prevClue.unlocked) {
 					return false;
 				}
 			}
@@ -65,20 +80,32 @@ export default {
 			return true;
 		},
 		nextDisabled() {
-			if (!this.data.loading &&
-				this.data.clues &&
-				this.data.clues.length
-			) {
-				if(
-					this.data.currentClueIndex !== null &&
-					this.data.currentClueIndex+1 !== this.data.clues.length &&
-					!!this.data.clues[this.data.currentClueIndex+1].unlocked
-				) {
+			if (!this.loading && this.clues && this.clues.length) {
+				if (this.nextClue && this.nextClue.unlocked) {
 					return false;
 				}
 			}
 
 			return true;
+		}
+	},
+	methods: {
+		next() {
+			if (!this.nextDisabled) {
+				this.mode = "view";
+				this.$emit("nav-click", this.currentClueIndex + 1);
+			}
+		},
+		prev() {
+			if (!this.prevDisabled) {
+				this.mode = "view";
+				this.$emit("nav-click", this.currentClueIndex - 1);
+			}
+		},
+		setMode(mode) {
+			if (mode !== "view" || this.currentClue._id) {
+				this.mode = mode;
+			}
 		}
 	}
 };

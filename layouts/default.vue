@@ -7,26 +7,33 @@
 		<GlobalNav />
 	</div>
 </template>
+<script>
+export default {
+	name: "DefaultLayout"
+};
+</script>
 <style lang="scss">
-	.defaultLayout {
-		display: flex;
-		flex-direction: column;
+.defaultLayout {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+
+	&__content {
 		height: 100%;
+		display: flex;
+		background-color: $bg-accent-dark;
+		box-shadow: inset 0px 10px 15px -10px fade-out(black, 0.4);
 
-		&__content {
-			height: 100%;
-			display: flex;
-			background-color: $bg-accent-dark;
-			box-shadow: inset 0px 10px 15px -10px fade-out(black, .4);
+		align-items: center;
+		justify-content: center;
 
-			align-items: center;
-			justify-content: center;
-
-			&:not(.loaded) {
-				.viewport, .grid, .error {
-					display: none;
-				}
+		&:not(.loaded) {
+			.viewport,
+			.grid,
+			.error {
+				display: none;
 			}
 		}
 	}
+}
 </style>

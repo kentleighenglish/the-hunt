@@ -1,17 +1,17 @@
 <template>
 	<div class="progressBar">
 		<div class="progressBar__frame" />
-		<div class="progressBar__slider" :style="{ width: `${percentComplete}%` }" />
+		<div
+			class="progressBar__slider"
+			:style="{ width: `${percentComplete}%` }"
+		/>
 	</div>
 </template>
 <script>
 export default {
 	name: "GlobalProgressBar",
-	props: {
-		data: () => ({})
-	},
 	computed: {
-		percentComplete: function() {
+		percentComplete() {
 			// if (!this.data.loading &&
 			// 	this.data.clues && this.data.clues.length &&
 			// 	completed && completed.length
@@ -20,15 +20,16 @@ export default {
 			// }
 			return 0;
 		}
-	},
-}
+	}
+};
 </script>
 <style lang="scss">
 .progressBar {
 	position: relative;
 	height: 1px;
 
-	&__slider, &__frame {
+	&__slider,
+	&__frame {
 		position: absolute;
 		top: 0;
 		left: 0;

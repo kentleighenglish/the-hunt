@@ -2,14 +2,19 @@ module.exports = {
 	root: true,
 	env: {
 		browser: true,
-		node: true,
+		node: true
 	},
 	parserOptions: {
-		parser: '@babel/eslint-parser',
-		requireConfigFile: false,
+		parser: "@babel/eslint-parser",
+		requireConfigFile: false
 	},
-	extends: ['@nuxtjs', 'plugin:nuxt/recommended', 'prettier'],
-	plugins: [],
+	extends: [
+		"@nuxtjs",
+		"plugin:prettier/recommended",
+		"plugin:nuxt/recommended",
+		"prettier"
+	],
+	plugins: ["eslint-plugin-prettier"],
 	// add your custom rules here
 	rules: {
 		"prettier/prettier": [
@@ -19,7 +24,9 @@ module.exports = {
 				semi: true,
 				tabs: true,
 				tabWidth: 2,
+				trailingComma: "none"
 			}
-		]
+		],
+		"vue/html-indent": ["error", "tab"]
 	}
-}
+};
