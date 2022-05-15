@@ -18,21 +18,21 @@
 		</div>
 		<a
 			class="nav__button"
-			:class="{ active: data.mode === 'view', disabled: !data.currentClueId }"
+			:class="{ active: mode === 'view', disabled: !currentClue }"
 			@click="setMode('view')"
 		>
 			<CommonIcon>search</CommonIcon>
 		</a>
 		<a
 			class="nav__button"
-			:class="{ active: data.mode === 'camera' }"
+			:class="{ active: mode === 'camera' }"
 			@click="setMode('camera')"
 		>
 			<CommonIcon>photo_camera</CommonIcon>
 		</a>
 		<a
 			class="nav__button"
-			:class="{ active: data.mode === 'grid' }"
+			:class="{ active: mode === 'grid' }"
 			@click="setMode('grid')"
 		>
 			<CommonIcon>apps</CommonIcon>
@@ -54,14 +54,14 @@ export default {
 			},
 			prevClue({ clues: { currentClue, clues } }) {
 				const currentIndex = clues.findIndex(
-					(clue) => currentClue._id === clue._id
+					(clue) => currentClue?._id === clue._id
 				);
 
 				return clues[currentIndex - 1] || null;
 			},
 			nextClue({ clues: { currentClue, clues } }) {
 				const currentIndex = clues.findIndex(
-					(clue) => currentClue._id === clue._id
+					(clue) => currentClue?._id === clue._id
 				);
 
 				return clues[currentIndex + 1] || null;
