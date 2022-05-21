@@ -12,7 +12,7 @@
 	</div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
 	name: "IndexPage",
@@ -27,6 +27,14 @@ export default {
 			error({ clues: { error } }) {
 				return error;
 			}
+		})
+	},
+	mounted() {
+		this.fetchAllStories();
+	},
+	methods: {
+		...mapActions({
+			fetchAllStories: "stories/fetchAll"
 		})
 	}
 };

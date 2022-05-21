@@ -1,7 +1,7 @@
 <template>
 	<div class="defaultLayout">
 		<GlobalBanner />
-		<div class="defaultLayout__content">
+		<div v-if="connected && hasEvents" class="defaultLayout__content">
 			<Nuxt />
 		</div>
 		<GlobalNav />

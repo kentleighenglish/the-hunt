@@ -1,14 +1,14 @@
 import "isomorphic-fetch";
-import {
-	ApolloClient,
+// eslint-disable-next-line import/no-named-as-default
+import ApolloClient, {
 	InMemoryCache,
 	IntrospectionFragmentMatcher,
 	gql
 } from "apollo-boost";
-import debug from "../debug";
+import debugFunc from "../debug";
 import * as fragments from "./_fragments";
 
-const debugErr = debug("directus");
+const debug = debugFunc("directus:utils");
 
 const { DIRECTUS_HOST, DIRECTUS_USERNAME, DIRECTUS_PASSWORD } = process.env;
 
@@ -40,7 +40,7 @@ export const createToken = async () => {
 
 		return data.access_token;
 	} catch (e) {
-		debugErr(e);
+		debug(e);
 		return false;
 	}
 };
@@ -103,7 +103,7 @@ export const fetchFromDirectus = async (query, variables = {}) => {
 
 			return response.data;
 		} catch (e) {
-			debugErr(e, JSON.stringify(e, null, 2));
+			debug(e, JSON.stringify(e, null, 2));
 			return {};
 		}
 	} else {

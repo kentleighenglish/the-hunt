@@ -2,21 +2,21 @@ import { gql } from "apollo-boost";
 import { fetchFromDirectus } from "./_utils";
 import { parse } from "./parser";
 
-export const fetchStories = async ({ slug }) => {
+export const fetchStories = async () => {
 	const { hunt_stories: stories = [] } = await fetchFromDirectus(
 		gql`
-			query hunt_stories() {
-				hunt_stories() {
+			query hunt_stories($storiesFilter: hunt_stories_filter) {
+				hunt_stories(filter: $storiesFilter) {
 					...HuntStories
 				}
 			}
 		`,
-		{}
+		{ storiesFilter: {} }
 	);
 
 	const parsedStories = (stories || []).map((item) => ({
 		item,
-		collection: "hunt_stories"
+		collection: "stories"
 	}));
 
 	return await parse(parsedStories);

@@ -34,16 +34,6 @@ const bindEvents = (io, socket) => {
 			debug(`Bound socket.io event: ${action}`);
 		});
 	});
-
-	socket.on("disconnecting", () => {
-		const sheetRooms = [...socket.rooms].filter((roomName) =>
-			/^sheet_/.test(roomName)
-		);
-		sheetRooms.forEach((room) => {
-			const roomSplit = room.split("_");
-			socketEvents.rooms.leave({ socket, io, data: { id: roomSplit[1] } });
-		});
-	});
 };
 
 export default function (options) {
