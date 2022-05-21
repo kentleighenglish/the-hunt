@@ -1,4 +1,4 @@
-import debugFunc from "../../utils/debug";
+import debugFunc from "../debug";
 import * as collections from "./_collections";
 
 const debug = debugFunc("app:parser");

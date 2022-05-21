@@ -1,7 +1,7 @@
-import * as m from "../mongo";
+import * as d from "../directus";
 
 export const fetchAll = async ({ data, callback }) => {
-	const stories = await m.stories.fetchAll();
+	const stories = await d.fetchStories();
 
 	if (stories) {
 		callback(null, { stories });

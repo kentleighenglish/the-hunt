@@ -8,8 +8,56 @@
 	</div>
 </template>
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
-	name: "DefaultLayout"
+	name: "DefaultLayout",
+	computed: {
+		...mapState({
+			connected({ socket: { connected } }) {
+				return connected;
+			},
+			hasEvents({ socket: { events } }) {
+				return events && Object.keys(events).length;
+			}
+		})
+	},
+	mounted() {
+		this.addSocket({ socket: this.$socket });
+
+		const socketIo = this.$socket().connect();
+
+		this.bindEvents(socketIo);
+	},
+	methods: {
+		...mapActions({
+			addSocket: "socket/addSocket",
+			addEvents: "socket/addEvents",
+			updateSocketStatus: "socket/updateSocketStatus"
+		}),
+		bindEvents(socketIo) {
+			socketIo.on("connect", () => {
+				this.updateSocketStatus({ connected: true });
+			});
+			socketIo.on("connect_error", (error) => {
+				this.updateSocketStatus({ connected: false, error });
+				this.pushMessage({
+					type: "error",
+					body: error
+				});
+			});
+			socketIo.on("disconnect", (reason) => {
+				this.updateSocketStatus({ connected: false, error: reason });
+				this.pushMessage({
+					type: "error",
+					body: reason
+				});
+			});
+			socketIo.on("connectResponse", ({ events }) => {
+				this.addEvents({ events });
+			});
+		}
+	}
 };
 </script>
 <style lang="scss">
