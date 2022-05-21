@@ -9,14 +9,6 @@ export default {
 };
 </script>
 <style lang="scss">
-/* fallback */
-@font-face {
-	font-family: "Material Icons";
-	font-style: normal;
-	font-weight: 400;
-	src: url(/fonts/material-icons.woff2) format("woff2");
-}
-
 .icon {
 	font-family: "Material Icons";
 	font-weight: normal;

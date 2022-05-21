@@ -17,25 +17,13 @@
 			</a>
 		</div>
 		<a
+			v-for="item in navItems"
+			:key="item.action"
 			class="nav__button"
-			:class="{ active: mode === 'view', disabled: !currentClue }"
-			@click="setMode('view')"
+			:class="{ active: mode === item.action }"
+			@click="triggerAction(item.action)"
 		>
-			<CommonIcon>search</CommonIcon>
-		</a>
-		<a
-			class="nav__button"
-			:class="{ active: mode === 'camera' }"
-			@click="setMode('camera')"
-		>
-			<CommonIcon>photo_camera</CommonIcon>
-		</a>
-		<a
-			class="nav__button"
-			:class="{ active: mode === 'grid' }"
-			@click="setMode('grid')"
-		>
-			<CommonIcon>apps</CommonIcon>
+			<CommonIcon>{{ item.icon }}</CommonIcon>
 		</a>
 	</div>
 </template>
@@ -89,6 +77,15 @@ export default {
 			return true;
 		}
 	},
+	data() {
+		return {
+			navItems: [
+				{ action: "camera", icon: "photo_camera" },
+				{ action: "compass", icon: "explore" },
+				{ action: "grid", icon: "apps" }
+			]
+		};
+	},
 	methods: {
 		next() {
 			if (!this.nextDisabled) {
@@ -131,7 +128,8 @@ export default {
 		justify-content: center;
 		align-items: center;
 
-		padding: 0 $gap;
+		width: 100%;
+		max-width: 70px;
 
 		.icon {
 			font-size: $font-xl;
