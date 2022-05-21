@@ -1,3 +1,5 @@
+const socketPath = "/socket";
+
 export default {
 	// Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
 	ssr: false,
@@ -22,7 +24,7 @@ export default {
 			{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
 			{
 				rel: "stylesheet",
-				href: "//fonts.googleapis.com/css?family=Montserrat:400,700|Trade+Winds"
+				href: "//fonts.googleapis.com/css?family=Montserrat:400,700|Trade+Winds|Material+Icons"
 			},
 			{ rel: "manifest", href: "manifest.json" },
 			{ rel: "shortcut icon", type: "image/png", href: "/favicon.png" }
@@ -36,7 +38,7 @@ export default {
 	},
 
 	// Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-	plugins: [],
+	plugins: ["@/plugins/socket"],
 
 	// Auto import components: https://go.nuxtjs.dev/config-components
 	components: true,
@@ -48,7 +50,10 @@ export default {
 	],
 
 	// Modules: https://go.nuxtjs.dev/config-modules
-	modules: ["@nuxtjs/style-resources"],
+	modules: [["@/server/socket", { socketPath }], "@nuxtjs/style-resources"],
+	publicRuntimeConfig: {
+		socketPath
+	},
 
 	// Build Configuration: https://go.nuxtjs.dev/config-build
 	build: {}
