@@ -1,13 +1,13 @@
 import Vue from "vue";
 
-export const loadAllType = "@stories/loadAll";
-export const loadAllCompleteType = "@stories/loadAllComplete";
+export const fetchAllType = "@stories/fetchAll";
+export const fetchAllCompleteType = "@stories/fetchAllComplete";
 
 export default {
-	[loadAllType](state) {
+	[fetchAllType](state) {
 		Vue.set(state.loading, "all", true);
 	},
-	[loadAllCompleteType](state, { stories = [] }) {
+	[fetchAllCompleteType](state, { stories = [] }) {
 		Vue.set(state, "stories", stories);
 	}
 };
