@@ -11,7 +11,7 @@ const collections = {
 	characters: {}
 };
 
-export const DB_NAME = "stTool";
+export const DB_NAME = "theHunt";
 
 export const run = async (query) => {
 	try {
@@ -36,10 +36,10 @@ export const run = async (query) => {
 };
 
 export const assertCollection = async (collection, db = DB_NAME) => {
-	const collectionList = await run(db => db.collections());
+	const collectionList = await run((db) => db.collections());
 
 	if (!map(collectionList, "namespace").includes(`${DB_NAME}.${collection}`)) {
-		await run(db => db.createCollection(collection));
+		await run((db) => db.createCollection(collection));
 		debug(`Collection Created: ${collection}`);
 	}
 	const { secondaryIndices = [] } = collections[collection] || {};
@@ -47,12 +47,15 @@ export const assertCollection = async (collection, db = DB_NAME) => {
 		secondaryIndices.map(async (index) => {
 			try {
 				if (typeof index === "string") {
-					await run(db =>
+					await run((db) =>
 						db.collection(collection).createIndex({ [index]: 1 })
 					);
 				}
 			} catch (e) {
-				debugError(`Failed creating index on ${collection} with field ${index}. `, e);
+				debugError(
+					`Failed creating index on ${collection} with field ${index}. `,
+					e
+				);
 			}
 		})
 	);
@@ -60,6 +63,6 @@ export const assertCollection = async (collection, db = DB_NAME) => {
 
 export const assertAllCollections = async (db = DB_NAME) => {
 	await Promise.all(
-		Object.keys(collections).map(async key => await assertCollection(key, db))
+		Object.keys(collections).map(async (key) => await assertCollection(key, db))
 	);
 };

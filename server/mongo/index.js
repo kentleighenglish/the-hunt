@@ -1,7 +1,7 @@
-import * as characters from "./characters";
+import * as stories from "./stories";
 
-export { characters };
+export { stories };
 
 export default {
-	characters
+	stories
 };

@@ -17,6 +17,12 @@ module.exports = {
 	plugins: ["eslint-plugin-prettier"],
 	// add your custom rules here
 	rules: {
+		semi: "off",
+		"no-tabs": "off",
+		indent: ["error", "tab"],
+		quotes: ["error", "double"],
+		"import/namespace": ["error", { allowComputed: true }],
+		"vue/no-v-html": "off",
 		"prettier/prettier": [
 			"error",
 			{

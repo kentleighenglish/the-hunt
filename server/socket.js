@@ -7,10 +7,13 @@ import * as socketEvents from "./events";
 const debug = debugFunc("app:socket");
 
 export const eventTypes = Object.keys(socketEvents).reduce((acc, key) => {
-	const methods = Object.keys(socketEvents[key]).reduce((acc2, key2) => ({
-		...acc2,
-		[key2]: `${key}/${key2}`
-	}), {});
+	const methods = Object.keys(socketEvents[key]).reduce(
+		(acc2, key2) => ({
+			...acc2,
+			[key2]: `${key}/${key2}`
+		}),
+		{}
+	);
 
 	return {
 		...acc,
@@ -33,7 +36,9 @@ const bindEvents = (io, socket) => {
 	});
 
 	socket.on("disconnecting", () => {
-		const sheetRooms = [...socket.rooms].filter(roomName => /^sheet_/.test(roomName));
+		const sheetRooms = [...socket.rooms].filter((roomName) =>
+			/^sheet_/.test(roomName)
+		);
 		sheetRooms.forEach((room) => {
 			const roomSplit = room.split("_");
 			socketEvents.rooms.leave({ socket, io, data: { id: roomSplit[1] } });
@@ -48,13 +53,16 @@ export default function (options) {
 		const io = new Server(server, { path: options.socketPath });
 		const { host = "localhost", port = 3000 } = this.nuxt.options.server;
 
-		this.nuxt.server.listen = () => new Promise(resolve =>
-			server.listen(port, host, resolve)
-		);
+		this.nuxt.server.listen = () =>
+			new Promise((resolve) => server.listen(port, host, resolve));
 
-		this.nuxt.hook("close", () => new Promise((resolve) => {
-			server.close(resolve);
-		}));
+		this.nuxt.hook(
+			"close",
+			() =>
+				new Promise((resolve) => {
+					server.close(resolve);
+				})
+		);
 
 		io.on("connection", (socket) => {
 			debug("Socket connection");
