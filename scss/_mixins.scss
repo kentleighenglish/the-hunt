@@ -1,0 +1,271 @@
+
+@mixin realShadow($color: $shadow-default, $inset: false, $mult: 1) {
+	$size: (4px * $mult);
+	$size2: (5px * $mult);
+	$size3: (3px * $mult);
+
+	@if $inset {
+		box-shadow:
+		inset $size (($size * 2) * -1) ($size * 1.5) ($size * -1) fade-out(darken($color, 20%), .95),
+		inset $size $size ($size * 3) $size2 fade-out(desaturate($color, 60%), .9);
+	} @else {
+		box-shadow:
+		0 (($size * 2) * -1) ($size * 1.5) ($size * -1) fade-out(darken($color, 20%), .9),
+
+		0 ($size2 * 5) ($size2 * 4) (($size2 * 4) * -1) rgba(0,0,0,0.1),
+		0 ($size2 * 2) ($size2 * 2) ($size3 * -1) fade-out(desaturate($color, 60%), .8);
+	}
+}
+
+@mixin unstyledLink() {
+	text-decoration: none;
+	color: initial;
+
+	&:hover {
+		color: $primary-dark;
+	}
+}
+
+@mixin lineClamp($count: 3) {
+	-webkit-line-clamp: $count;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+@mixin generate-flex($width, $extra: true) {
+	display: flex;
+	@if width == 0 {
+		flex: 1 1 initial;
+		max-width: initial;
+		width: initial;
+	} @else {
+		flex: 1 1 $width;
+		max-width: $width;
+		width: $width;
+	}
+
+	@if $extra {
+		justify-content: flex-start;
+		align-items: flex-start;
+		align-content: flex-start;
+		box-sizing: border-box;
+	}
+}
+
+@mixin generate-flex-items($multiple, $extra: true) {
+	$total: floor(math.div(100, $multiple));
+
+	// width:
+	@for $i from 1 through $total {
+		$width-name: $i*$multiple;
+		$width: percentage($i * math.div($multiple, 100));
+		&-#{$width-name} {
+			@include generate-flex($width, $extra);
+		}
+	}
+}
+
+@mixin prefixer($property, $value) {
+	#{$property}: $value;
+	-webkit-#{$property}: $value;
+	-moz-#{$property}: $value;
+	-ms-#{$property}: $value;
+	-o-#{$property}: $value;
+}
+
+// Breakpoints
+@mixin generate-breakpoints($lower: false, $upper: false) {
+	@for $i from 1 through length($mq-breakpoints) {
+		$bp: nth($mq-breakpoints, $i);
+		$name: nth($bp, 1);
+		$lower-name: false;
+		$upper-name: false;
+
+		@if $lower == false {
+			$upper-name: $name;
+		} @else if $upper == false {
+			$lower-name: $name;
+		} @else {
+			@if $i == 1 {
+				$upper-name: $name;
+			} @else if $i == length($mq-breakpoints) {
+				$lower-name: $name;
+			} @else {
+				$upper-bp: nth($mq-breakpoints, ($i + 1));
+
+				$lower-name: $name;
+				$upper-name: nth($upper-bp, 1);
+			}
+		}
+
+		&-#{$name} {
+			@include breakpoint($from: $lower-name, $until: $upper-name);
+		}
+	}
+}
+
+@mixin breakpoint($from: false, $until: false) {
+	&-show {
+		display: none;
+	}
+	&-hide {
+		display: inherit;
+	}
+	@include mq($from, $until) {
+		@include generate-flex-items(5, false);
+		@include generate-flex-items(33, false);
+
+		&-block {
+			width: 100%;
+		}
+
+		&-fill {
+			width: 100%;
+			height: 100%;
+		}
+
+		&-noshrink {
+			flex-shrink: 0;
+		}
+
+		&-margin {
+			margin: math.div($gap, 2);
+
+			&-v {
+				margin: math.div($gap, 2) 0;
+			}
+			&-h {
+				margin: 0 math.div($gap, 2);
+			}
+		}
+
+		&-padding {
+			padding: math.div($gap, 2);
+
+			&-v {
+				padding: math.div($gap, 2) 0;
+			}
+			&-h {
+				padding: 0 math.div($gap, 2);
+			}
+
+			&-lg {
+				padding: $gap;
+			}
+			&-sm {
+				padding: math.div($gap, 4);
+			}
+		}
+
+		&-show {
+			display: inherit;
+		}
+		&-hide {
+			display: none;
+		}
+		&-row {
+			flex-direction: row;
+			flex-wrap: nowrap;
+
+			&-wrap {
+				flex-direction: row;
+				flex-wrap: wrap;
+			}
+			&-nowrap {
+				flex-direction: row;
+				flex-wrap: nowrap;
+			}
+		}
+		&-column {
+			flex-direction: column;
+			flex-wrap: nowrap;
+
+			&-wrap {
+				flex-direction: column;
+				flex-wrap: wrap;
+			}
+			&-nowrap {
+				flex-direction: column;
+				flex-wrap: nowrap;
+			}
+		}
+		&-align {
+			@each $alignment-h, $name-h in $alignments-h {
+				&-#{$name-h} {
+					justify-content: $alignment-h;
+					align-items: $alignment-h;
+					align-content: $alignment-h;
+
+					@each $alignment-v, $name-v in $alignments-v {
+						&-#{$name-v} {
+							align-items: $alignment-v;
+							align-content: $alignment-v;
+							justify-content: $alignment-h;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@mixin texturedBg($colour, $pattern){
+	background: url("@/assets/pat/#{$pattern}.png"), $colour;
+	background-blend-mode: multiply;
+}
+
+@mixin radiant-gradient($color, $direction: 'right') {
+	@include gradient(adjust-hue($color, -10deg), adjust-hue($color, 10deg), $direction);
+}
+
+@mixin gradient($colour1, $colour2, $direction: 'right') {
+	$gradientType: false;
+	$webkitMoz: false;
+	$to: false;
+	@if $direction == 'right' {
+		$webkitMoz: 'left';
+		$to: 'to right';
+		$gradientType: 1;
+	} @else if $direction == 'left' {
+		//Swap colours
+		$tempColour: $colour1;
+		$colour1: $colour2;
+		$colour2: $tempColour;
+
+		$to: 'to right';
+		$webkitMoz: 'left';
+		$gradientType: 1;
+	} @else if $direction == 'up' {
+		//Swap colours
+		$tempColour: $colour1;
+		$colour1: $colour2;
+
+		$to: 'to bottom';
+		$webkitMoz: 'top';
+		$gradientType: 0;
+	} @else if $direction == 'down' {
+		$to: 'to bottom';
+		$webkitMoz: 'top';
+		$gradientType: 0;
+	}
+
+	background: $colour1;
+	background: -moz-linear-gradient(#{$webkitMoz},  $colour1 0%, $colour2 100%);
+	background: -webkit-linear-gradient(#{$webkitMoz},  $colour1 0%,$colour2 100%);
+	background: linear-gradient(#{$to},  $colour1 0%,$colour2 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#{$colour1}', endColorstr='#{$colour2}',GradientType='#{$gradientType}' );
+}
+
+@mixin generateStateModifiers() {
+	@for $i from 1 through length($state-modifiers) {
+		$state-mod: nth($state-modifiers, $i);
+		$name: nth($state-mod, 1);
+		$mod: nth($state-mod, 2);
+
+		&--#{$name} {
+			@content($mod);
+		}
+	}
+}

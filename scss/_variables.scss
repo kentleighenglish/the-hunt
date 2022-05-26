@@ -14,6 +14,8 @@ $bg: #1A2E38;
 $bg-accent: #2C4756;
 $bg-accent-dark: #142833;
 
+$shadow-default: saturate(darken($bg-accent, 10%), 25%);
+
 // Text
 $font-default: "Montserrat", sans-serif;
 $font-display: "Trade Winds", cursive;

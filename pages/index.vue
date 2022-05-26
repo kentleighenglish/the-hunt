@@ -1,14 +1,7 @@
 <template>
 	<div class="indexPage">
-		<ClueViewport
-			v-if="!loading && mode !== 'error'"
-			@grid-click="setClue($event)"
-			@camera-decode="onCameraDecode($event)"
-		/>
-		<CommonLoader v-if="loading && !error" />
-		<div v-if="!loading && error && mode === 'error'">
-			<p class="error">{{ error }}</p>
-		</div>
+		<CommonLoader v-if="loading" />
+		<StoriesList v-else />
 	</div>
 </template>
 <script>
@@ -18,13 +11,10 @@ export default {
 	name: "IndexPage",
 	computed: {
 		...mapState({
-			mode({ clues: { mode } }) {
-				return mode;
+			loading({ stories: { loading } }) {
+				return loading.all;
 			},
-			loading({ clues: { loading } }) {
-				return loading;
-			},
-			error({ clues: { error } }) {
+			error({ stories: { error } }) {
 				return error;
 			}
 		})

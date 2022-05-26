@@ -8,6 +8,7 @@ export default {
 		Vue.set(state.loading, "all", true);
 	},
 	[fetchAllCompleteType](state, { stories = [] }) {
+		Vue.set(state.loading, "all", false);
 		Vue.set(state, "stories", stories);
 	}
 };

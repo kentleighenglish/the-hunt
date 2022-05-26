@@ -42,7 +42,9 @@ div.loader {
 	display: inline-block;
 	position: relative;
 	text-align: center;
-	margin-top: -50px;
+	margin: 0 auto;
+	align-self: center;
+	justify-self: center;
 
 	span {
 		position: relative;
