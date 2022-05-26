@@ -28,7 +28,7 @@ export default {
 		);
 
 		Vue.set(state.loading, "all", false);
-		Vue.set(state.stories, "stories", newStories);
+		Vue.set(state, "stories", newStories);
 	},
 	[setCurrentStoryType](state, { id }) {
 		Vue.set(state, "currentStory", id);
