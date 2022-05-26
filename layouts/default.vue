@@ -71,6 +71,7 @@ export default {
 		display: flex;
 		background-color: $bg-accent-dark;
 		box-shadow: inset 0px 10px 15px -10px fade-out(black, 0.4);
+		overflow: hidden;
 
 		align-items: center;
 		justify-content: center;

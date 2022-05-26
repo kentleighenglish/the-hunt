@@ -16,7 +16,7 @@ export default {
 	computed: {
 		...mapState({
 			stories({ stories: { stories = [] } }) {
-				return stories;
+				return [...stories, ...stories, ...stories, ...stories, ...stories];
 			}
 		})
 	}
@@ -29,11 +29,13 @@ export default {
 	padding: 0 $gap;
 	margin: $gap 0;
 	flex-direction: column;
+	overflow: auto;
 
 	&__item {
 		display: flex;
 		width: 100%;
 		max-width: 100%;
+		margin-bottom: math.div($gap, 2);
 
 		background: darken($bg-accent, 5%);
 		border-radius: $global-border-radius;
