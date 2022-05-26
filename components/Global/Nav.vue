@@ -32,6 +32,15 @@ import { mapState } from "vuex";
 
 export default {
 	name: "GlobalNav",
+	data() {
+		return {
+			navItems: [
+				{ action: "camera", icon: "photo_camera" },
+				{ action: "compass", icon: "explore" },
+				{ action: "grid", icon: "apps" }
+			]
+		};
+	},
 	computed: {
 		...mapState({
 			clues({ clues: { loading, clues = [] } }) {
@@ -76,15 +85,6 @@ export default {
 
 			return true;
 		}
-	},
-	data() {
-		return {
-			navItems: [
-				{ action: "camera", icon: "photo_camera" },
-				{ action: "compass", icon: "explore" },
-				{ action: "grid", icon: "apps" }
-			]
-		};
 	},
 	methods: {
 		next() {

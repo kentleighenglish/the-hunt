@@ -40,7 +40,7 @@ export default {
 		padding: $gap;
 		align-items: center;
 
-		@include realShadow();
+		box-shadow: 4px 4px 0px 0px darken($bg-accent-dark, 2%);
 	}
 
 	&__cover {
