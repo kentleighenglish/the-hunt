@@ -22,6 +22,28 @@ export const fetchStories = async () => {
 	return await parse(parsedStories);
 };
 
+export const fetchStory = async ({ id }) => {
+	const { hunt_stories: stories = [] } = await fetchFromDirectus(
+		gql`
+			query hunt_stories($storiesFilter: hunt_stories_filter) {
+				hunt_stories(filter: $storiesFilter) {
+					...HuntStories
+				}
+			}
+		`,
+		{ storiesFilter: { id: { _eq: Number(id) } } }
+	);
+
+	const parsedStories = (stories || []).map((item) => ({
+		item,
+		collection: "stories"
+	}));
+
+	const parsed = await parse(parsedStories);
+
+	return parsed[0] || {};
+};
+
 // export const fetchTechnologies = async () => {
 // 	const { technologies = [] } = await fetchFromDirectus(
 // 		gql`

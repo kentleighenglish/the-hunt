@@ -33,7 +33,9 @@ export default {
 		...mapActions({
 			addSocket: "socket/addSocket",
 			addEvents: "socket/addEvents",
-			updateSocketStatus: "socket/updateSocketStatus"
+			updateSocketStatus: "socket/updateSocketStatus",
+			fetchStory: "stories/fetch",
+			setCurrentStory: "stories/setCurrentStory"
 		}),
 		bindEvents(socketIo) {
 			socketIo.on("connect", () => {
@@ -55,7 +57,16 @@ export default {
 			});
 			socketIo.on("connectResponse", ({ events }) => {
 				this.addEvents({ events });
+
+				this.initStory();
 			});
+		},
+		initStory() {
+			const currentStory = localStorage.getItem("currentStory");
+
+			if (currentStory) {
+				this.setCurrentStory({ id: currentStory, router: this.$router });
+			}
 		}
 	}
 };

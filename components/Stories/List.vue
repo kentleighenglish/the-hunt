@@ -1,6 +1,11 @@
 <template>
 	<div class="storiesList">
-		<div v-for="story in stories" :key="story._id" class="storiesList__item">
+		<div
+			v-for="story in stories"
+			:key="story._id"
+			class="storiesList__item"
+			@click="onLoadStory(story)"
+		>
 			<div class="storiesList__cover">
 				<img :src="story.cover" />
 			</div>
@@ -9,16 +14,24 @@
 	</div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
 	name: "StoriesList",
 	computed: {
 		...mapState({
 			stories({ stories: { stories = [] } }) {
-				return [...stories, ...stories, ...stories, ...stories, ...stories];
+				return stories;
 			}
 		})
+	},
+	methods: {
+		...mapActions({
+			setCurrentStory: "stories/setCurrentStory"
+		}),
+		async onLoadStory(story) {
+			await this.setCurrentStory({ id: story.id, router: this.$router });
+		}
 	}
 };
 </script>
@@ -41,8 +54,14 @@ export default {
 		border-radius: $global-border-radius;
 		padding: $gap;
 		align-items: center;
+		cursor: pointer;
 
 		box-shadow: 4px 4px 0px 0px darken($bg-accent-dark, 2%);
+
+		&:hover,
+		&:focus {
+			background: $bg-accent;
+		}
 	}
 
 	&__cover {
