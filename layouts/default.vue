@@ -1,6 +1,6 @@
 <template>
 	<div class="defaultLayout">
-		<IntroAnimation />
+		<IntroAnimation v-if="showIntro" @introEnd="hideIntro" />
 		<GlobalBanner />
 		<div v-if="connected && hasEvents" class="defaultLayout__content">
 			<Nuxt />
@@ -13,6 +13,11 @@ import { mapState, mapActions } from "vuex";
 
 export default {
 	name: "DefaultLayout",
+	data() {
+		return {
+			showIntro: true
+		};
+	},
 	computed: {
 		...mapState({
 			connected({ socket: { connected } }) {
@@ -29,6 +34,12 @@ export default {
 		const socketIo = this.$socket().connect();
 
 		this.bindEvents(socketIo);
+
+		const skipIntro = localStorage.getItem("skipIntro");
+
+		if (skipIntro) {
+			this.hideIntro();
+		}
 	},
 	methods: {
 		...mapActions({
@@ -38,6 +49,9 @@ export default {
 			fetchStory: "stories/fetch",
 			setCurrentStory: "stories/setCurrentStory"
 		}),
+		hideIntro() {
+			this.showIntro = false;
+		},
 		bindEvents(socketIo) {
 			socketIo.on("connect", () => {
 				this.updateSocketStatus({ connected: true });

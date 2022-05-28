@@ -94,6 +94,8 @@ export default {
 					easing: "easeInQuad"
 				});
 			}
+
+			setTimeout(() => this.$emit("introEnd"), 2000);
 		}, 100);
 	}
 };
