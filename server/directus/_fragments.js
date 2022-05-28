@@ -22,7 +22,5 @@ export const HuntEvents = gql`
 	fragment HuntEvents on hunt_events {
 		id
 		reference
-		on_start
-		on_end
 	}
 `;

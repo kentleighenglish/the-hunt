@@ -1,5 +1,6 @@
 <template>
 	<div class="defaultLayout">
+		<IntroAnimation />
 		<GlobalBanner />
 		<div v-if="connected && hasEvents" class="defaultLayout__content">
 			<Nuxt />

@@ -13,6 +13,7 @@
     "lintfix": "prettier --write --list-different . && npm run lint:js -- --fix"
   },
   "dependencies": {
+    "animejs": "^3.2.1",
     "apollo-boost": "^0.4.9",
     "core-js": "^3.19.3",
     "graphql": "^16.5.0",
