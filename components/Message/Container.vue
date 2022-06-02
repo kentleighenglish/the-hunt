@@ -9,7 +9,7 @@
 			>
 				{{ message.body }}
 			</MessageItem>
-			<MessageItem v-if="isTyping">
+			<MessageItem v-if="isTyping" inline>
 				<MessageTyping />
 			</MessageItem>
 		</div>
