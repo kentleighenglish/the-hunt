@@ -6,7 +6,9 @@
 				v-for="message in messages"
 				:key="message.id"
 				v-bind="message"
-			/>
+			>
+				{{ message.body }}
+			</MessageItem>
 			<MessageItem v-if="isTyping">
 				<span>...</span>
 			</MessageItem>
@@ -32,6 +34,8 @@ export default {
 .messageContainer {
 	height: 300px;
 	width: 100%;
-	background: red;
+	background: $bg;
+
+	@include texturedBg($bg-accent, "zebra");
 }
 </style>
