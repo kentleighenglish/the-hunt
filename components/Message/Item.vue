@@ -1,6 +1,8 @@
 <template>
 	<div class="messageItem">
-		<slot />
+		<div class="messageItem__inner">
+			<slot />
+		</div>
 	</div>
 </template>
 <script>
@@ -9,8 +11,16 @@ export default {
 };
 </script>
 <style lang="scss">
-.message {
-	width: 300px;
-	background: $bg-accent;
+.messageItem {
+	&__inner {
+		width: 300px;
+		background: $bg-accent;
+
+		padding: math.div($gap, 2);
+		background: $grey;
+		margin-bottom: math.div($gap, 2);
+
+		@include realShadow();
+	}
 }
 </style>

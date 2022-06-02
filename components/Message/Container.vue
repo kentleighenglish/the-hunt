@@ -10,7 +10,7 @@
 				{{ message.body }}
 			</MessageItem>
 			<MessageItem v-if="isTyping">
-				<span>...</span>
+				<MessageTyping />
 			</MessageItem>
 		</div>
 	</div>
@@ -37,5 +37,10 @@ export default {
 	background: $bg;
 
 	@include texturedBg($bg-accent, "zebra");
+
+	&__messages {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+	}
 }
 </style>
