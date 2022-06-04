@@ -21,5 +21,5 @@ const Template = (args, { argTypes }) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-	messages: [{ body: "Hello There" }]
+	messages: [{ body: "Hello There" }, { body: "", isPrompt: true }]
 };

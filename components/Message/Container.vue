@@ -41,6 +41,8 @@ export default {
 	&__messages {
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
+
+		padding: $gap;
 	}
 }
 </style>

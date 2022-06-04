@@ -14,10 +14,12 @@ export default {
 	classMod: {
 		baseClass: "messageItem",
 		modifiers: {
-			inline: (vm) => vm.inline
+			inline: (vm) => vm.inline,
+			isPrompt: (vm) => vm.isPrompt
 		}
 	},
 	props: {
+		isPrompt: Boolean,
 		inline: {
 			type: Boolean,
 			default: false
@@ -27,6 +29,8 @@ export default {
 </script>
 <style lang="scss">
 .messageItem {
+	display: flex;
+
 	&__inner {
 		width: 300px;
 		background: $bg-accent;
@@ -34,6 +38,7 @@ export default {
 		padding: math.div($gap, 2);
 		background: $grey;
 		margin-bottom: math.div($gap, 2);
+		font-size: 12px;
 
 		@include realShadow();
 	}
@@ -42,6 +47,14 @@ export default {
 		.messageItem__inner {
 			background: none;
 			box-shadow: none;
+		}
+	}
+
+	&--isPrompt {
+		justify-content: flex-end;
+
+		.messageItem__inner {
+			background: lighten($grey, 3%);
 		}
 	}
 }
