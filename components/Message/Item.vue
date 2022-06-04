@@ -1,7 +1,13 @@
 <template>
 	<div :class="componentClass">
 		<div class="messageItem__inner">
-			<slot />
+			<slot v-if="!isPrompt" />
+			<MessageInlineForm
+				v-else
+				:form="body"
+				:data="promptData"
+				@input="updatePromptData"
+			/>
 		</div>
 	</div>
 </template>
@@ -20,9 +26,23 @@ export default {
 	},
 	props: {
 		isPrompt: Boolean,
+		body: {
+			type: String,
+			default: ""
+		},
 		inline: {
 			type: Boolean,
 			default: false
+		}
+	},
+	data() {
+		return {
+			promptData: {}
+		};
+	},
+	methods: {
+		updatePromptData(updatedData) {
+			this.promptData = { ...updatedData };
 		}
 	}
 };
